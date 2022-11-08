@@ -8,7 +8,7 @@
 
 body {
     display: flex;
-    padding: 0 10px;
+    padding: 0 30px;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
@@ -17,6 +17,29 @@ body {
 
 .wrapper {
     max-width: 1200px;
+    position: relative;
+}
+
+.wrapper i {
+    top: 50%;
+    height: 45px;
+    width: 45px;
+    cursor: pointer;
+    position: absolute;
+    font-size: 1.2rem;
+    text-align: center;
+    line-height: 45px;
+    background: #fff;
+    border-radius: 50%;
+    transform: translateY(-50%);
+}
+
+.wrapper i:first-child {
+    left: -23px;
+}
+
+.wrapper i:last-child {
+    right: -23px;
 }
 
 .wrapper .carousel {
@@ -35,4 +58,10 @@ body {
 
 .carousel img:first-child {
     margin-left: 0px;
+}
+
+@media screen and (max-width: 550px) {
+    .carousel img{
+        width: 100%;
+    }
 }
