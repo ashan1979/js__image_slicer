@@ -7,6 +7,7 @@ let firstImgWidth = firstImg.clientWidth + 14; // getting first img width and ad
 
 arrowIcons.forEach(icon => {
     icon.addEventListener('click', () => {
+        // if clicked icon is left, reduce width value from the carousal scroll left alse add to it
         carousel.scrollLeft += icon.id == "left" ? -firstImgWidth : firstImgWidth;
     })
 });
@@ -22,12 +23,14 @@ const dragging = (e) => {
     //Scrolling images/carousel to left according to mouse pointer
     if (!isDragStart) return;
     e.preventDefault();
+    carousel.classList.add('dragging')
     let positionDiff = e.pageX -  prevPageX;
     carousel.scrollLeft = prevScrollLeft - positionDiff;
 }
 
 const dragStop = () => {
     isDragStart = false;
+    carousel.classList.remove('dragging')
 }
 
 carousel.addEventListener("mousedown", dragStart);
