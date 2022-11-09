@@ -28,8 +28,9 @@ const autoSlide = () => {
     let valDifference = firstImgWidth - positionDiff
 
     if(carousel.scrollLeft > prevScrollLeft) {
-        console.log(valDifference)
+        return carousel.scrollLeft += positionDiff > firstImgWidth / 3 ? valDifference : -positionDiff
     }
+    carousel.scrollLeft -= positionDiff > firstImgWidth / 3 ? valDifference : -positionDiff
 }
 
 const dragStart = (e) => {
