@@ -2,7 +2,7 @@ const carousel = document.querySelector('.carousel');
 firstImg = carousel.querySelectorAll('img')[0];
 arrowIcons = document.querySelectorAll('.wrapper i');
 
-let isDragStart = false, prevPageX, prevScrollLeft;
+let isDragStart = false, prevPageX, prevScrollLeft, positionDiff;
 let firstImgWidth = firstImg.clientWidth + 14; // getting first img width and adding 14 margin value
 
 
@@ -22,10 +22,20 @@ arrowIcons.forEach(icon => {
     })
 });
 
+const autoSlide = () => {
+    positionDiff = Math.abs(positionDiff) //making positionDiff value to positive
+    let firstImgWidth = firstImg.clientWidth + 14
+    let valDifference = firstImgWidth - positionDiff
+
+    if(carousel.scrollLeft > prevScrollLeft) {
+        console.log(valDifference)
+    }
+}
+
 const dragStart = (e) => {
     // updating global variables value on mouse down event
     isDragStart = true;
-    prevPageX = e.pageX || e.touched[0].pageX;
+    prevPageX = e.pageX || e.touches[0].pageX;
     prevScrollLeft = carousel.scrollLeft;
 }
 
@@ -34,7 +44,7 @@ const dragging = (e) => {
     if (!isDragStart) return;
     e.preventDefault();
     carousel.classList.add('dragging')
-    let positionDiff = (e.pageX || e.touched[0].pageX) -  prevPageX;
+    positionDiff = (e.pageX || e.touches[0].pageX) -  prevPageX;
     carousel.scrollLeft = prevScrollLeft - positionDiff;
     showHideIcons();
 }
@@ -42,6 +52,7 @@ const dragging = (e) => {
 const dragStop = () => {
     isDragStart = false;
     carousel.classList.remove('dragging')
+    autoSlide()
 }
 
 carousel.addEventListener("mousedown", dragStart);
