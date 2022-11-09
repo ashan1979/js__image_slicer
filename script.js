@@ -2,7 +2,7 @@ const carousel = document.querySelector('.carousel');
 firstImg = carousel.querySelectorAll('img')[0];
 arrowIcons = document.querySelectorAll('.wrapper i');
 
-let isDragStart = false, prevPageX, prevScrollLeft, positionDiff;
+let isDragStart = false, isDragging = false, prevPageX, prevScrollLeft, positionDiff;
 let firstImgWidth = firstImg.clientWidth + 14; // getting first img width and adding 14 margin value
 
 
@@ -23,6 +23,8 @@ arrowIcons.forEach(icon => {
 });
 
 const autoSlide = () => {
+    if (carousel.scrollLeft == (carousel.scrollWidth - carousel.clientWidth)) return;
+
     positionDiff = Math.abs(positionDiff) //making positionDiff value to positive
     let firstImgWidth = firstImg.clientWidth + 14
     let valDifference = firstImgWidth - positionDiff
@@ -44,6 +46,7 @@ const dragging = (e) => {
     //Scrolling images/carousel to left according to mouse pointer
     if (!isDragStart) return;
     e.preventDefault();
+    isDragging = true
     carousel.classList.add('dragging')
     positionDiff = (e.pageX || e.touches[0].pageX) -  prevPageX;
     carousel.scrollLeft = prevScrollLeft - positionDiff;
@@ -53,6 +56,9 @@ const dragging = (e) => {
 const dragStop = () => {
     isDragStart = false;
     carousel.classList.remove('dragging')
+
+    if (!isDragging) return
+    isDragging = false
     autoSlide()
 }
 
